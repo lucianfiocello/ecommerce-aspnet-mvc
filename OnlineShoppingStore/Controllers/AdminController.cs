@@ -81,8 +81,17 @@ namespace OnlineShoppingStore.Controllers
         }
 
         [HttpPost]
-        public ActionResult ProductEdit(Tbl_Product tbl)
+        public ActionResult ProductEdit(Tbl_Product tbl, HttpPostedFileBase file)
         {
+            string pic = null;
+            if (file != null)
+            {
+                pic = System.IO.Path.GetFileName(file.FileName);
+                string path = System.IO.Path.Combine(Server.MapPath("~/ProductImg/"), pic);
+                // file is uploaded
+                file.SaveAs(path);
+            }
+            tbl.ProductImage = file != null ? pic : tbl.ProductImage;
             tbl.ModifiedDate = DateTime.Now;
             _unitOfWork.GetRepositoryInstance<Tbl_Product>().Update(tbl);
             return RedirectToAction("Product");
@@ -95,8 +104,17 @@ namespace OnlineShoppingStore.Controllers
         }
 
         [HttpPost]
-        public ActionResult ProductAdd(Tbl_Product tbl)
+        public ActionResult ProductAdd(Tbl_Product tbl, HttpPostedFileBase file)
         {
+            string pic = null;
+            if (file != null)
+            {
+                pic = System.IO.Path.GetFileName(file.FileName);
+                string path = System.IO.Path.Combine(Server.MapPath("~/ProductImg/"), pic);
+                // file is uploaded
+                file.SaveAs(path);
+            }
+            tbl.ProductImage = pic;
             tbl.CreatedDate = DateTime.Now;
             _unitOfWork.GetRepositoryInstance<Tbl_Product>().Add(tbl);
             return RedirectToAction("Product");
