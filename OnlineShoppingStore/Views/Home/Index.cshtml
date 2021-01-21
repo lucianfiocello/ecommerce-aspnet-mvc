@@ -1,4 +1,6 @@
 ﻿@model OnlineShoppingStore.Models.Home.HomeIndexViewModel
+@using PagedList
+@using PagedList.Mvc
 @{
     ViewBag.Title = "Home Page";
 }
@@ -85,21 +87,24 @@
                     {
                         <p>Not Available</p>
                     }
-                    </p>
-                    <div class="product-item-badge">
-                        @if (item.IsFeatured == true)
-                        {
-                            <p>New</p>
-                        }
-                        else
-                        {
-                            <p>Old</p>
-                        }
+                        </p>
+                        <div class="product-item-badge">
+                            @if (item.IsFeatured == true)
+                            {
+                                <p>New</p>
+                            }
+                            else
+                            {
+                                <p>Old</p>
+                            }
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
-
+        }
+    <br />
+</div>
+<div class="container">
+    @Html.PagedListPager(Model.ListOfProducts, page => Url.Action("Index", new { page, search = Request.QueryString["search"] }))
 </div>
