@@ -18,10 +18,11 @@ IsActive bit null,
 IsDelete bit null,
 CreatedDate datetime null,
 ModifiedDate datetime null,
-Description datetime null,
+Description varchar(50) null,
 ProductImage varchar(max),
 IsFeatured bit null,
 Quantity int,
+Price decimal(18,0),
 foreign key (CategoryId) references Tbl_Category(CategoryId)
 )
 
